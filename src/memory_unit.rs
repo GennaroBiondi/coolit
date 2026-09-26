@@ -47,13 +47,13 @@ impl MemoryUnit {
 impl Display for MemoryUnit {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Byte(x) => write!(f, "{}B", x),
-            Self::Kilo(x) => write!(f, "{}KB", x),
-            Self::KiloBinary(x) => write!(f, "{}KiB", x),
-            Self::Mega(x) => write!(f, "{}MB", x),
-            Self::MegaBinary(x) => write!(f, "{}MiB", x),
-            Self::Giga(x) => write!(f, "{}GB", x),
-            Self::GigaBinary(x) => write!(f, "{}GiB", x),
+            Self::Byte(x) => write!(f, "{x}B"),
+            Self::Kilo(x) => write!(f, "{x}Kb"),
+            Self::KiloBinary(x) => write!(f, "{x}KiB"),
+            Self::Mega(x) => write!(f, "{x}Mb"),
+            Self::MegaBinary(x) => write!(f, "{x}MiB"),
+            Self::Giga(x) => write!(f, "{x}Gb"),
+            Self::GigaBinary(x) => write!(f, "{x}GiB"),
         }
     }
 }
