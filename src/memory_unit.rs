@@ -76,8 +76,10 @@ impl FromStr for MemoryUnit {
     type Err = ParseMemoryUnitError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let s = s.to_lowercase();
+
         // Thank god macros exist, before it was a pretty long if chain.
-        let (num, unit) = get_suffix_and_amount!(s, "Gb", "Mb", "Kb", "B")
+        let (num, unit) = get_suffix_and_amount!(s, "gib", "mib", "kib", "gb", "mb", "kb", "b")
             .ok_or(ParseMemoryUnitError::InvalidUnit)?;
 
         let value = num
@@ -85,10 +87,13 @@ impl FromStr for MemoryUnit {
             .map_err(|_| ParseMemoryUnitError::InvalidAmount)?;
 
         Ok(match unit {
-            "B" => Self::Byte(value),
-            "Kb" => Self::Kilo(value),
-            "Mb" => Self::Mega(value),
-            "Gb" => Self::Giga(value),
+            "b" => Self::Byte(value),
+            "kb" => Self::Kilo(value),
+            "mb" => Self::Mega(value),
+            "gb" => Self::Giga(value),
+            "kib" => Self::KiloBinary(value),
+            "mib" => Self::MegaBinary(value),
+            "gib" => Self::GigaBinary(value),
             _ => unreachable!(),
         })
     }
