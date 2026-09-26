@@ -18,16 +18,26 @@ pub use memory_unit::MemoryUnit;
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
 struct Arguments {
-    #[arg(short = 'i', long = "input")]
+    #[arg(short = 'i', long = "input", help = "The input file")]
     source: PathBuf,
 
-    #[arg(short = 'o', long = "output")]
+    #[arg(short = 'o', long = "output", help = "The output file")]
     destination: PathBuf,
 
-    #[arg(short = 'l', long = "limit", conflicts_with = "unpack")]
+    #[arg(
+        short = 'l',
+        long = "limit",
+        conflicts_with = "unpack",
+        help = "The limit files can have when packing"
+    )]
     size_limit: Option<MemoryUnit>,
 
-    #[arg(short = 'u', long = "unpack", conflicts_with = "size_limit")]
+    #[arg(
+        short = 'u',
+        long = "unpack",
+        conflicts_with = "size_limit",
+        help = "Determines if the program should try to pack or unpack the input file"
+    )]
     unpack: bool,
 }
 
@@ -44,28 +54,10 @@ fn pack(source: &Path, destination: &Path, byte_size_limit: u64) -> Result<()> {
         bail!("can't pack anything other than files")
     }
 
-    // let file = File::open(source).context("failed to open source file")?;
-    // let mut reader = BufReader::new(file);
-
     let chunk_data = std::fs::read(source)?;
     let chunk = Chunk::from_bytes(chunk_data);
 
     let chunks = chunk.divided(byte_size_limit as usize);
-
-    // loop {
-    //     let mut chunk_data = vec![0u8; byte_size_limit as usize];
-    //     let bytes_read = reader
-    //         .read(&mut chunk_data)
-    //         .context("failed to read chunk data")?;
-    //
-    //     // EOF reached.
-    //     if bytes_read == 0 {
-    //         break;
-    //     }
-    //
-    //     let pushing_chunk = Chunk::from_bytes(chunk_data);
-    //     chunks.push(pushing_chunk);
-    // }
 
     chunks
         .to_filesystem(destination)
