@@ -33,6 +33,17 @@ impl Chunk {
     pub fn into_inner(self) -> Vec<u8> {
         self.inner
     }
+
+    /// Divides the [`Chunk`] into a [`Chunks`] and returns it.
+    pub fn divided(&self, split_size: usize) -> Chunks {
+        let mut chunks = Chunks::new();
+
+        for chunk in self.inner.chunks(split_size) {
+            chunks.push(Chunk::from_bytes(chunk.to_vec()));
+        }
+
+        chunks
+    }
 }
 
 /// Ordered group of chunks.
@@ -92,7 +103,7 @@ impl Chunks {
             file.flush().context("failed to flush chunk file")?;
         }
 
-        todo!()
+        Ok(())
     }
 
     /// Collects all the chunks in a directory and returns them.
@@ -120,5 +131,17 @@ impl Chunks {
         }
 
         Ok(chunks)
+    }
+
+    /// Unifies all the [`Chunk`]s in the [`Chunks`] into a single one [`Chunk`] and returns
+    /// it.
+    pub fn unified(&self) -> Chunk {
+        Chunk::from_bytes(
+            self.inner
+                .iter()
+                .flat_map(|chunk| chunk.inner.iter())
+                .copied()
+                .collect(),
+        )
     }
 }
