@@ -29,6 +29,21 @@ pub enum MemoryUnit {
     GigaBinary(u64),
 }
 
+impl MemoryUnit {
+    /// Returns the [`MemoryUnit`] converted into bytes.
+    pub const fn as_byte_amount(&self) -> u64 {
+        match self {
+            Self::Byte(x) => *x,
+            Self::Kilo(x) => *x * 1000,
+            Self::KiloBinary(x) => *x * 1024,
+            Self::Mega(x) => *x * 1000 * 1000,
+            Self::MegaBinary(x) => *x * 1024 * 1024,
+            Self::Giga(x) => *x * 1000 * 1000 * 1000,
+            Self::GigaBinary(x) => *x * 1024 * 1024 * 1024,
+        }
+    }
+}
+
 impl Display for MemoryUnit {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
