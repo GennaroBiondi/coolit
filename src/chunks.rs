@@ -84,8 +84,10 @@ impl Chunks {
     ///
     /// Will error if the path already exists, or any I/O error happens.
     pub fn to_filesystem(&self, path: &Path) -> Result<()> {
-        use std::fs::{self, File};
-        use std::io::Write;
+        use std::{
+            fs::{self, File},
+            io::Write,
+        };
 
         if path.exists() {
             bail!("path already exists")
