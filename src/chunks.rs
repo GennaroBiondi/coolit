@@ -96,7 +96,7 @@ impl Chunks {
         fs::create_dir(path).context("creating chunks directory")?;
 
         for (index, chunk) in self.inner.iter().enumerate() {
-            let new_chunk_name = format!("chunk_{:04}.chunk", index);
+            let new_chunk_name = format!("chunk_{index:04}.chunk");
 
             let mut file =
                 File::create(path.join(new_chunk_name)).context("failed to create chunk file")?;
