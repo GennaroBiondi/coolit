@@ -102,7 +102,9 @@ fn main() -> Result<()> {
             .size_limit
             .context("missing size limit (use --limit or --unpack)")?;
 
-        pack(&args.source, &args.destination, size_limit.as_byte_amount())?;
+        let destination = &args.destination.with_added_extension("cpkg");
+
+        pack(&args.source, destination, size_limit.as_byte_amount())?;
     }
 
     Ok(())
