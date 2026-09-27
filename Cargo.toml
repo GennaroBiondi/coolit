@@ -2,6 +2,8 @@
 name = "coolit"
 version = "0.1.0"
 edition = "2024"
+description = "make files cool by splitting them!"
+keywords = ["utility", "cli"]
 
 [dependencies]
 anyhow = "1.0.104"
