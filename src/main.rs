@@ -57,7 +57,7 @@ fn pack(source: &Path, destination: &Path, byte_size_limit: u64) -> Result<()> {
     let chunk_data = std::fs::read(source)?;
     let chunk = Chunk::from_bytes(chunk_data);
 
-    let chunks = chunk.divided(byte_size_limit as usize);
+    let chunks = chunk.divided(usize::try_from(byte_size_limit)?);
 
     chunks
         .to_filesystem(destination)
