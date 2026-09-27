@@ -46,6 +46,12 @@ impl Chunk {
     }
 }
 
+impl Default for Chunk {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 /// Ordered group of chunks.
 #[derive(Debug, Clone)]
 pub struct Chunks {
@@ -145,5 +151,11 @@ impl Chunks {
                 .copied()
                 .collect(),
         )
+    }
+}
+
+impl Default for Chunks {
+    fn default() -> Self {
+        Self::new()
     }
 }
