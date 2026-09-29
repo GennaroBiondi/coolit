@@ -3,7 +3,12 @@ name = "coolit"
 version = "0.1.0"
 edition = "2024"
 description = "make files cool by splitting them!"
-keywords = ["utility", "cli"]
+license = "MIT"
+authors = ["GennaroBiondi"]
+repository = "https://github.com/GennaroBiondi/coolit"
+readme = "README.md"
+keywords = ["utility", "cli", "file", "split", "chunk"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 anyhow = "1.0.104"
